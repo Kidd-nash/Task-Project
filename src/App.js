@@ -11,8 +11,8 @@ function App() {
   ]);
 
   return (
-    <div>
-      <h1>My Task List</h1>
+    <div className="container my-4">
+      <h1 className="mb-3">My Task List</h1>
       <CreateTask />
       <TaskList tasks={tasks} />
     </div>

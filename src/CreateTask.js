@@ -2,9 +2,9 @@ import { useState } from "react";
 
 function CreateTask() {
     return (
-        <form>
-          <input type="text" />
-          <button type="submit">Add Task</button>
+        <form className="d-flex gap-2 mb-3">
+          <input type="text" className="form-control" placeholder="Enter a task..." />
+          <button type="submit" className="btn btn-primary">Add Task</button>
         </form>
     );
 }
