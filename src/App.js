@@ -10,10 +10,21 @@ function App() {
     { id: 4, text: "- Bob Ross" }
   ]);
 
+  const [showForm, setShowForm] = useState(false);
+
+  const displayForm = () => {
+    setShowForm(true);
+  }
+
   return (
-    <div className="container my-4">
+    <div className="container my-4 bg-light">
       <h1 className="mb-3">My Task List</h1>
-      <CreateTask />
+      <button onClick={displayForm}>+</button>
+      { 
+        showForm && (
+          <CreateTask />
+        )
+      }
       <TaskList tasks={tasks} />
     </div>
   );
