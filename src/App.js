@@ -13,7 +13,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
 
   const displayForm = () => {
-    setShowForm(true);
+    setShowForm(prev => !prev);
   }
 
   return (
