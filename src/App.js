@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TaskList from "./Tasklist";
+import CreateTask from "./CreateTask";
 
 function App() {
   const [tasks, setTasks] = useState([    
@@ -12,6 +13,7 @@ function App() {
   return (
     <div>
       <h1>My Task List</h1>
+      <CreateTask />
       <TaskList tasks={tasks} />
     </div>
   );
