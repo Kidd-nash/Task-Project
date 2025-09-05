@@ -1,10 +1,11 @@
-export default function TaskList() {
+function TaskList({ tasks }) {
     return (
       <ul>
-        <li>Learn React</li>
-        <li>Build a Task List</li>
-        <li>Celebrate 🎉</li>
+        {tasks.map(task => (
+          <li key={task.id}>{task.text}</li>
+        ))}
       </ul>
     );
   }
   
+export default TaskList;
