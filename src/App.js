@@ -16,6 +16,13 @@ function App() {
     setShowForm(prev => !prev);
   }
 
+  const deleteTask = (taskId) => {
+
+    const newTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(newTasks);
+    
+  }
+
   return (
     <div className="container my-4 bg-light">
       <h1 className="mb-3">My Task List</h1>
@@ -25,7 +32,7 @@ function App() {
           <CreateTask />
         )
       }
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} deleteTask={deleteTask}/>
     </div>
   );
 }
