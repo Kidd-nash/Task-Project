@@ -20,6 +20,11 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  const resetTasks = () => {
+    setTasks(defaultTasks);
+    localStorage.removeItem("tasks");
+  };
+
   const [showForm, setShowForm] = useState(false);
 
   const displayForm = () => {
@@ -43,6 +48,7 @@ function App() {
         )
       }
       <TaskList tasks={tasks} deleteTask={deleteTask}/>
+      <button onClick={resetTasks}>Reset</button>
     </div>
   );
 }
