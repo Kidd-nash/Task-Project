@@ -41,14 +41,14 @@ function App() {
   return (
     <div className="container my-4 bg-light">
       <h1 className="mb-3">My Task List</h1>
-      <button onClick={displayForm}>+</button>
+      <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
       { 
         showForm && (
           <CreateTask />
         )
       }
       <TaskList tasks={tasks} deleteTask={deleteTask}/>
-      <button onClick={resetTasks}>Reset</button>
+      <button onClick={resetTasks} className="btn btn-danger">Reset</button>
     </div>
   );
 }
