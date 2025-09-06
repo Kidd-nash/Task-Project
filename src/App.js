@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TaskList from "./Tasklist";
 import CreateTask from "./CreateTask";
 
 function App() {
-  const [tasks, setTasks] = useState([    
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem("tasks");
+    return saved ? JSON.parse(saved) : [
     { id: 1, text: "\"I can't do this\", \"I can't do it\" that's balogna." },
     { id: 2, text: "Talent is a pursued interest." },
     { id: 3, text: "Anything that you are willing to practice you can do." },
     { id: 4, text: "- Bob Ross" }
-  ]);
+    ]
+  })
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -21,7 +28,7 @@ function App() {
     const newTasks = tasks.filter(task => task.id !== taskId);
     setTasks(newTasks);
     
-  }
+  };
 
   return (
     <div className="container my-4 bg-light">
