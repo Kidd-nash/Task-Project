@@ -31,6 +31,11 @@ function App() {
     setShowForm(prev => !prev);
   }
 
+  function handleCreateTask(text) {
+    const newTask = { id: Date.now(), text };
+    setTasks([...tasks, newTask]);
+  }
+
   const deleteTask = (taskId) => {
 
     const newTasks = tasks.filter(task => task.id !== taskId);
@@ -44,7 +49,7 @@ function App() {
       <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
       { 
         showForm && (
-          <CreateTask />
+          <CreateTask onAdd={handleCreateTask} />
         )
       }
       <TaskList tasks={tasks} deleteTask={deleteTask}/>
