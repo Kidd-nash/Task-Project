@@ -26,6 +26,8 @@ function App() {
   };
 
   const [showForm, setShowForm] = useState(false);
+  const [editingTask, setEditingTask] = useState(null);
+  const [mode, setMode] = useState("create");
 
   const displayForm = () => {
     setShowForm(prev => !prev);
@@ -47,12 +49,24 @@ function App() {
     <div className="container my-4 bg-light">
       <h1 className="mb-3">My Task List</h1>
       <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
-      { 
+      {
         showForm && (
-          <CreateTask onAdd={handleCreateTask} />
-        )
-      }
-      <TaskList tasks={tasks} deleteTask={deleteTask}/>
+        <CreateTask
+          onAdd={handleCreateTask}
+          initialValue={editingTask?.text}
+          mode={mode}
+          onClose={() => setShowForm(false)}
+        />
+      )}
+      <TaskList
+        tasks={tasks}
+        deleteTask={deleteTask}
+        onEdit={(task) => {
+          setEditingTask(task);
+          setMode("edit");
+          setShowForm(true);
+        }}
+      />
       <button onClick={resetTasks} className="btn btn-danger">Reset</button>
     </div>
   );
