@@ -1,4 +1,4 @@
-function TaskList({ tasks, deleteTask }) {
+function TaskList({ tasks, deleteTask, onEdit }) {
     return (
       <ul className="list-group">
         {tasks.map(task => (
@@ -24,9 +24,13 @@ function TaskList({ tasks, deleteTask }) {
                   </button>
                 </li>
                 <li>
-                  <button type="button" className="dropdown-item text-primary">
-                    Edit
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => onEdit(task)}
+                  className="dropdown-item"
+                >
+                  Edit
+                </button>
                 </li>
                 <li>
                   <button
