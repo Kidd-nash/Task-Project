@@ -4,6 +4,8 @@ import CreateTask from "./CreateTask";
 
 function App() {
 
+  // GENERAL with Retrieve
+
   const defaultTasks = [
     { id: 1, text: "Talent is a pursued interest." },
     { id: 2, text: "Anything you are willing to practice you can do." },
@@ -25,6 +27,8 @@ function App() {
     localStorage.removeItem("tasks");
   };
 
+  // FRONT END NICHE
+
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [mode, setMode] = useState("create");
@@ -35,9 +39,17 @@ function App() {
     setShowForm(prev => !prev);
   };
 
+  //CREATE UPDATE DELETE
+
   function handleCreateTask(text) {
     const newTask = { id: Date.now(), text };
     setTasks([...tasks, newTask]);
+  }
+
+  function handleUpdateTask(id, newText) {
+    setTasks(tasks.map(t =>
+      t.id === id ? { ...t, text: newText } : t
+    ));
   }
 
   const deleteTask = (taskId) => {
@@ -61,7 +73,9 @@ function App() {
         showForm && (
         <CreateTask
           onAdd={handleCreateTask}
+          onUpdate={handleUpdateTask}
           initialValue={editingTask?.text}
+          taskId={editingTask?.id}
           mode={mode}
           onClose={() => setShowForm(false)}
         />
