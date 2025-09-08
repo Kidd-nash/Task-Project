@@ -2,9 +2,43 @@ function TaskList({ tasks, deleteTask }) {
     return (
       <ul className="list-group">
         {tasks.map(task => (
-          <li key={task.id} className="list-group-item d-flex flex-row justify-content-between">
+          <li 
+            key={task.id} 
+            className="list-group-item d-flex flex-row justify-content-between"
+          >
             <span>{task.text}</span>
-            <button onClick={() => { deleteTask(task.id) }} className="btn btn-outline-danger" aria-label="Close">X</button>
+
+            <div className="dropdown dropstart">
+              <button 
+                type="button" 
+                className="btn btn-outline-secondary dropdown-toggle" 
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                ...
+              </button>
+              <ul className="dropdown-menu">
+                <li>
+                  <button type="button" className="dropdown-item text-success">
+                    Mark as Done
+                  </button>
+                </li>
+                <li>
+                  <button type="button" className="dropdown-item text-primary">
+                    Edit
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => deleteTask(task.id)}
+                    className="dropdown-item text-danger"
+                  >
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
           </li>
         ))}
       </ul>
