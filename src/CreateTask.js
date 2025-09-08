@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function CreateTask({ onAdd, initialValue = "", mode, onClose }) {
+function CreateTask({ onAdd, onUpdate, taskId, initialValue = "", mode, onClose }) {
   const [text, setText] = useState(initialValue);
 
   useEffect(() => {
@@ -13,6 +13,8 @@ function CreateTask({ onAdd, initialValue = "", mode, onClose }) {
 
     if (mode === "create") {
       onAdd(text);
+    } else if (mode === "edit") {
+      onUpdate(taskId, text);
     }
 
     setText("");

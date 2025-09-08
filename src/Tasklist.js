@@ -27,7 +27,7 @@ function TaskList({ tasks, deleteTask, onEdit }) {
                 <button
                   type="button"
                   onClick={() => onEdit(task)}
-                  className="dropdown-item"
+                  className="dropdown-item text-primary"
                 >
                   Edit
                 </button>
