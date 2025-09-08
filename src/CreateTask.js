@@ -4,7 +4,7 @@ function CreateTask({ onAdd, initialValue = "", mode, onClose }) {
   const [text, setText] = useState(initialValue);
 
   useEffect(() => {
-    setText(initialValue);
+    setText(initialValue || "");
   }, [initialValue]);
 
   function handleSubmit(e) {

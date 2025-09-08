@@ -30,8 +30,10 @@ function App() {
   const [mode, setMode] = useState("create");
 
   const displayForm = () => {
+    setEditingTask(null);
+    setMode("create");
     setShowForm(prev => !prev);
-  }
+  };
 
   function handleCreateTask(text) {
     const newTask = { id: Date.now(), text };
@@ -48,7 +50,13 @@ function App() {
   return (
     <div className="container my-4 bg-light">
       <h1 className="mb-3">My Task List</h1>
-      <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
+      <button 
+        onClick={displayForm} 
+        className="btn btn-outline-primary" 
+        aria-label="create"
+      >
+        +
+      </button>
       {
         showForm && (
         <CreateTask
