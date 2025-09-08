@@ -1,27 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function CreateTask({ onAdd }) {
-  const [newTask, setNewTask] = useState("");
+function CreateTask({ onAdd, initialValue = "", mode, onClose }) {
+  const [text, setText] = useState(initialValue);
 
-  function handleCreation(e) {
+  useEffect(() => {
+    setText(initialValue);
+  }, [initialValue]);
+
+  function handleSubmit(e) {
     e.preventDefault();
+    if (text.trim() === "") return;
 
-    if (newTask.trim() === "") return;
+    if (mode === "create") {
+      onAdd(text);
+    }
 
-    onAdd(newTask);
-    setNewTask("");
+    setText("");
+    onClose();
   }
 
   return (
-    <form onSubmit={handleCreation} className="d-flex gap-2 mb-3">
+    <form onSubmit={handleSubmit} className="d-flex gap-2 mb-3">
       <input 
         type="text" 
-        value={newTask} 
-        onChange={(e) => setNewTask(e.target.value)} 
-        className="form-control" 
-        placeholder="Enter a task..." 
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        className="form-control"
+        placeholder="Enter a task..."
       />
-      <button type="submit" className="btn btn-primary">Add Task</button>
+      <button type="submit" className="btn btn-primary">
+        {mode === "create" ? "Add Task" : "Save"}
+      </button>
     </form>
   );
 }
