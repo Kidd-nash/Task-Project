@@ -39,10 +39,17 @@ function App() {
     setShowForm(prev => !prev);
   };
 
+  const toggleDone = (taskId) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === taskId ? { ...task, done: !task.done } : task
+    );
+    setTasks(updatedTasks);
+  };
+
   //CREATE UPDATE DELETE
 
   function handleCreateTask(text) {
-    const newTask = { id: Date.now(), text };
+    const newTask = { id: Date.now(), text, done: false };
     setTasks([...tasks, newTask]);
   }
 
@@ -82,6 +89,7 @@ function App() {
       )}
       <TaskList
         tasks={tasks}
+        toggleDone={toggleDone}
         deleteTask={deleteTask}
         onEdit={(task) => {
           setEditingTask(task);
