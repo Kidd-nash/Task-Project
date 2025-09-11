@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function CreateTask({ onAdd, onUpdate, taskId, initialValue = "", mode, onClose }) {
+function TaskManagerForm({ onAdd, onUpdate, taskId, initialValue = "", mode, onClose }) {
   const [text, setText] = useState(initialValue);
 
   useEffect(() => {
@@ -37,4 +37,4 @@ function CreateTask({ onAdd, onUpdate, taskId, initialValue = "", mode, onClose 
   );
 }
 
-export default CreateTask;
+export default TaskManagerForm;

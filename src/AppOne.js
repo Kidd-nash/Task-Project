@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import TaskList from "./Tasklist";
-import CreateTask from "./CreateTask";
+import TaskManagerForm from "./TaskManagerForm";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -49,22 +49,20 @@ function App() {
 
   //CREATE UPDATE DELETE
 
-  function handleCreateTask(text) {
+  const handleCreateTask = (text) => {
     const newTask = { id: Date.now(), text, done: false };
     setTasks([...tasks, newTask]);
   }
 
-  function handleUpdateTask(id, newText) {
+  const handleUpdateTask = (id, newText) => {
     setTasks(tasks.map(t =>
       t.id === id ? { ...t, text: newText } : t
     ));
   }
 
   const deleteTask = (taskId) => {
-
     const newTasks = tasks.filter(task => task.id !== taskId);
     setTasks(newTasks);
-    
   };
 
   return (
@@ -83,7 +81,7 @@ function App() {
         </button>
         {
           showForm && (
-          <CreateTask
+          <TaskManagerForm
             onAdd={handleCreateTask}
             onUpdate={handleUpdateTask}
             initialValue={editingTask?.text}
