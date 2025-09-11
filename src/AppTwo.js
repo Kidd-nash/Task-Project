@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import ReminderList from './ReminderList';
 
 function AppTwo() {
 
@@ -25,6 +26,9 @@ function AppTwo() {
             </div>
             <div className="container my-4 bg-light">
                 <div>Reminder App</div>
+                <div>
+                    <ReminderList reminders={reminders} />
+                </div>
             </div>
         </div>
     )
