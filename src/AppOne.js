@@ -60,7 +60,7 @@ function App() {
     ));
   }
 
-  const deleteTask = (taskId) => {
+  const handleDeleteTask = (taskId) => {
     const newTasks = tasks.filter(task => task.id !== taskId);
     setTasks(newTasks);
   };
@@ -93,7 +93,7 @@ function App() {
         <TaskList
           tasks={tasks}
           toggleDone={toggleDone}
-          deleteTask={deleteTask}
+          deleteTask={handleDeleteTask}
           onEdit={(task) => {
             setEditingTask(task);
             setMode("edit");

@@ -19,6 +19,11 @@ function AppTwo() {
         localStorage.setItem("reminders", JSON.stringify(reminders));
     }, [reminders]);
 
+    const handleDeleteReminders = (reminderId) => {
+        const newReminders = reminders.filter(reminder => reminderId !== reminder.id)
+        setReminders(newReminders);
+    };
+
     return (
         <div>
             <div>
@@ -27,7 +32,10 @@ function AppTwo() {
             <div className="container my-4 bg-light">
                 <div>Reminder App</div>
                 <div>
-                    <ReminderList reminders={reminders} />
+                    <ReminderList 
+                        reminders={reminders}
+                        deleteReminder={handleDeleteReminders}
+                    />
                 </div>
             </div>
         </div>
