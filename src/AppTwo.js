@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AppTwo() {
 
@@ -18,8 +19,13 @@ function AppTwo() {
     }, [reminders]);
 
     return (
-        <div className="container my-4 bg-light">
-            <div>Reminder App</div>
+        <div>
+            <div>
+                <Link to="/" className="btn btn-primary m-2">Back</Link>
+            </div>
+            <div className="container my-4 bg-light">
+                <div>Reminder App</div>
+            </div>
         </div>
     )
 };

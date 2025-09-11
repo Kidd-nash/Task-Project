@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TaskList from "./Tasklist";
 import CreateTask from "./CreateTask";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
 
@@ -67,37 +68,42 @@ function App() {
   };
 
   return (
-    <div className="container my-4 bg-light">
-      <h1 className="mb-3">My Task List</h1>
-      <button 
-        onClick={displayForm} 
-        className="btn btn-outline-primary" 
-        aria-label="create"
-      >
-        +
-      </button>
-      {
-        showForm && (
-        <CreateTask
-          onAdd={handleCreateTask}
-          onUpdate={handleUpdateTask}
-          initialValue={editingTask?.text}
-          taskId={editingTask?.id}
-          mode={mode}
-          onClose={() => setShowForm(false)}
+    <div>
+      <div>
+        <Link to="/" className="btn btn-primary m-2">Back</Link>
+      </div>
+      <div className="container my-4 bg-light">
+        <h1 className="mb-3">My Task List</h1>
+        <button 
+          onClick={displayForm} 
+          className="btn btn-outline-primary" 
+          aria-label="create"
+        >
+          +
+        </button>
+        {
+          showForm && (
+          <CreateTask
+            onAdd={handleCreateTask}
+            onUpdate={handleUpdateTask}
+            initialValue={editingTask?.text}
+            taskId={editingTask?.id}
+            mode={mode}
+            onClose={() => setShowForm(false)}
+          />
+        )}
+        <TaskList
+          tasks={tasks}
+          toggleDone={toggleDone}
+          deleteTask={deleteTask}
+          onEdit={(task) => {
+            setEditingTask(task);
+            setMode("edit");
+            setShowForm(true);
+          }}
         />
-      )}
-      <TaskList
-        tasks={tasks}
-        toggleDone={toggleDone}
-        deleteTask={deleteTask}
-        onEdit={(task) => {
-          setEditingTask(task);
-          setMode("edit");
-          setShowForm(true);
-        }}
-      />
-      <button onClick={resetTasks} className="btn btn-danger">Reset</button>
+        <button onClick={resetTasks} className="btn btn-danger">Reset</button>
+      </div>
     </div>
   );
 }
