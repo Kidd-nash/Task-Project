@@ -31,6 +31,10 @@ function AppTwo() {
         setShowForm(prev => !prev);
     };
 
+    const handleCreateReminder = (reminder) => {
+        setReminders([...reminders, reminder]);
+    };
+
     return (
         <div>
             <div>
@@ -45,7 +49,10 @@ function AppTwo() {
                         aria-label="create"
                     >+</button>
                     {
-                        showForm && <RemindersForm />
+                        showForm && <RemindersForm
+                            onAdd={handleCreateReminder}
+                            onClose={displayForm}
+                        />
                     }
                     <ReminderList 
                         reminders={reminders}
