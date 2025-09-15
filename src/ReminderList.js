@@ -5,7 +5,7 @@ function ReminderList({ reminders, deleteReminder }) {
                 <li className="list-group-item d-flex flex-row justify-content-between">
                     <span>{reminder.text}</span>
                     <div>
-                        <span>{reminder.date}</span>
+                        <div>{new Date(reminder.date).toLocaleDateString()} {new Date(reminder.date).toLocaleTimeString()}</div>
                         <div className="dropdown dropdown-start">
                             <button
                                 type="button"
