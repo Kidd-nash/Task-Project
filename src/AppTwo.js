@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ReminderList from './ReminderList';
+import RemindersForm from "./RemindersForm";
 
 function AppTwo() {
 
@@ -24,6 +25,12 @@ function AppTwo() {
         setReminders(newReminders);
     };
 
+    const [showForm, setShowForm] = useState(false);
+
+    const displayForm = () => {
+        setShowForm(prev => !prev);
+    };
+
     return (
         <div>
             <div>
@@ -32,6 +39,14 @@ function AppTwo() {
             <div className="container my-4 bg-light">
                 <div>Reminder App</div>
                 <div>
+                    <button
+                        onClick={displayForm}
+                        className="btn btn-outline-primary"
+                        aria-label="create"
+                    >+</button>
+                    {
+                        showForm && <RemindersForm />
+                    }
                     <ReminderList 
                         reminders={reminders}
                         deleteReminder={handleDeleteReminders}
