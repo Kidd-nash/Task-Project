@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import TaskList from "./Tasklist";
+import Tasklist from "./Tasklist";
+import TaskListAPI from "./TaskListAPI";
 import TaskManagerForm from "./TaskManagerForm";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function App() {
-
-  // GENERAL with Retrieve
-
   const defaultTasks = [
     { id: 1, text: "Talent is a pursued interest." },
     { id: 2, text: "Anything you are willing to practice you can do." },
@@ -16,8 +14,8 @@ function App() {
 
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : defaultTasks
-  })
+    return saved ? JSON.parse(saved) : defaultTasks;
+  });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -27,8 +25,6 @@ function App() {
     setTasks(defaultTasks);
     localStorage.removeItem("tasks");
   };
-
-  // FRONT END NICHE
 
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
@@ -47,18 +43,16 @@ function App() {
     setTasks(updatedTasks);
   };
 
-  //CREATE UPDATE DELETE
-
   const handleCreateTask = (text) => {
     const newTask = { id: Date.now(), text, done: false };
     setTasks([...tasks, newTask]);
-  }
+  };
 
   const handleUpdateTask = (id, newText) => {
     setTasks(tasks.map(t =>
       t.id === id ? { ...t, text: newText } : t
     ));
-  }
+  };
 
   const handleDeleteTask = (taskId) => {
     const newTasks = tasks.filter(task => task.id !== taskId);
@@ -72,15 +66,9 @@ function App() {
       </div>
       <div className="container my-4 bg-light">
         <h1 className="mb-3">My Task List</h1>
-        <button 
-          onClick={displayForm} 
-          className="btn btn-outline-primary" 
-          aria-label="create"
-        >
-          +
-        </button>
-        {
-          showForm && (
+        <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
+
+        {showForm && (
           <TaskManagerForm
             onAdd={handleCreateTask}
             onUpdate={handleUpdateTask}
@@ -90,7 +78,9 @@ function App() {
             onClose={() => setShowForm(false)}
           />
         )}
-        <TaskList
+
+        {/* Local Storage Task List */}
+        <Tasklist
           tasks={tasks}
           toggleDone={toggleDone}
           deleteTask={handleDeleteTask}
@@ -100,7 +90,14 @@ function App() {
             setShowForm(true);
           }}
         />
-        <button onClick={resetTasks} className="btn btn-danger">Reset</button>
+
+        <button onClick={resetTasks} className="btn btn-danger mt-3">Reset</button>
+
+        <hr />
+
+        {/* API Task List */}
+        <h2>API Tasks</h2>
+        <TaskListAPI />
       </div>
     </div>
   );
