@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import TaskList from "./Tasklist";
-import CreateTask from "./CreateTask";
+import Tasklist from "./Tasklist";
+import TaskListAPI from "./TaskListAPI";
+import TaskManagerForm from "./TaskManagerForm";
+import { Link } from "react-router-dom";
 
 function App() {
-
-  // GENERAL with Retrieve
-
   const defaultTasks = [
     { id: 1, text: "Talent is a pursued interest." },
     { id: 2, text: "Anything you are willing to practice you can do." },
@@ -15,8 +14,8 @@ function App() {
 
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem("tasks");
-    return saved ? JSON.parse(saved) : defaultTasks
-  })
+    return saved ? JSON.parse(saved) : defaultTasks;
+  });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -26,8 +25,6 @@ function App() {
     setTasks(defaultTasks);
     localStorage.removeItem("tasks");
   };
-
-  // FRONT END NICHE
 
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
@@ -46,58 +43,62 @@ function App() {
     setTasks(updatedTasks);
   };
 
-  //CREATE UPDATE DELETE
-
-  function handleCreateTask(text) {
+  const handleCreateTask = (text) => {
     const newTask = { id: Date.now(), text, done: false };
     setTasks([...tasks, newTask]);
-  }
+  };
 
-  function handleUpdateTask(id, newText) {
+  const handleUpdateTask = (id, newText) => {
     setTasks(tasks.map(t =>
       t.id === id ? { ...t, text: newText } : t
     ));
-  }
+  };
 
-  const deleteTask = (taskId) => {
-
+  const handleDeleteTask = (taskId) => {
     const newTasks = tasks.filter(task => task.id !== taskId);
     setTasks(newTasks);
-    
   };
 
   return (
-    <div className="container my-4 bg-light">
-      <h1 className="mb-3">My Task List</h1>
-      <button 
-        onClick={displayForm} 
-        className="btn btn-outline-primary" 
-        aria-label="create"
-      >
-        +
-      </button>
-      {
-        showForm && (
-        <CreateTask
-          onAdd={handleCreateTask}
-          onUpdate={handleUpdateTask}
-          initialValue={editingTask?.text}
-          taskId={editingTask?.id}
-          mode={mode}
-          onClose={() => setShowForm(false)}
+    <div>
+      <div>
+        <Link to="/" className="btn btn-primary m-2">Back</Link>
+      </div>
+      <div className="container my-4 bg-light">
+        <h1 className="mb-3">My Task List</h1>
+        <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
+
+        {showForm && (
+          <TaskManagerForm
+            onAdd={handleCreateTask}
+            onUpdate={handleUpdateTask}
+            initialValue={editingTask?.text}
+            taskId={editingTask?.id}
+            mode={mode}
+            onClose={() => setShowForm(false)}
+          />
+        )}
+
+        {/* Local Storage Task List */}
+        <Tasklist
+          tasks={tasks}
+          toggleDone={toggleDone}
+          deleteTask={handleDeleteTask}
+          onEdit={(task) => {
+            setEditingTask(task);
+            setMode("edit");
+            setShowForm(true);
+          }}
         />
-      )}
-      <TaskList
-        tasks={tasks}
-        toggleDone={toggleDone}
-        deleteTask={deleteTask}
-        onEdit={(task) => {
-          setEditingTask(task);
-          setMode("edit");
-          setShowForm(true);
-        }}
-      />
-      <button onClick={resetTasks} className="btn btn-danger">Reset</button>
+
+        <button onClick={resetTasks} className="btn btn-danger mt-3">Reset</button>
+
+        <hr />
+
+        {/* API Task List */}
+        <h2>API Tasks</h2>
+        <TaskListAPI />
+      </div>
     </div>
   );
 }
