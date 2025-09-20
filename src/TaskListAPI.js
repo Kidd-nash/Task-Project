@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getTask } from "./TaskService";
 
 function TaskListAPI() {
   const [tasks, setTasks] = useState([]);
@@ -6,16 +7,14 @@ function TaskListAPI() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/tasks")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch tasks");
-        return res.json();
+    getTask()
+         .then((data) => {
+        if (data.success) {
+          setTasks(data.data);
+        } else {
+          throw new Error(data.error || "Unknown API error");
+        } 
       })
-      .then((data) => {
-        if (data.success) setTasks(data.data);
-        else throw new Error(data.error || "Unknown API error");
-      })
-      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
 
