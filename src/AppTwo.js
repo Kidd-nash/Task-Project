@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ReminderList from './ReminderList';
+import ReminderListAPI from "./api/ReminderListAPI";
 import RemindersForm from "./RemindersForm";
 
 function AppTwo() {
@@ -58,6 +59,12 @@ function AppTwo() {
                         reminders={reminders}
                         deleteReminder={handleDeleteReminders}
                     />
+
+                    <hr />
+                    <h2>
+                        API Reminders
+                    </h2>
+                    <ReminderListAPI />
                 </div>
             </div>
         </div>
