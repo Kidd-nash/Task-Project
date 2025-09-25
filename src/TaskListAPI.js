@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTask, deleteTask } from "./TaskService";
+import { getData } from "./TaskService";
 
 function TaskListAPI() {
   const [tasks, setTasks] = useState([]);
@@ -7,7 +7,7 @@ function TaskListAPI() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getTask()
+    getData("task")
       .then((data) => {
         if (data.success) {
           setTasks(data.data);
@@ -21,21 +21,21 @@ function TaskListAPI() {
   if (loading) return <p>Loading tasks...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  async function handleDelete(id) {
-    const result = await deleteTask(id);
-    if (result.success) {
-      setTasks(tasks.filter(task => task.id !== id));
-    } else {
-      alert("Error: " + result.error);
-    }
-  }
+  // async function handleDelete(id) {
+  //   const result = await deleteTask(id);
+  //   if (result.success) {
+  //     setTasks(tasks.filter(task => task.id !== id));
+  //   } else {
+  //     alert("Error: " + result.error);
+  //   }
+  // }
 
   return (
     <ul className="list-group mt-3">
       {tasks.map((task) => (
         <li key={task.id} className="list-group-item">
           {task.task}
-          <button onClick={() => handleDelete(task.id)}>Delete</button>
+          {/* <button onClick={() => handleDelete(task.id)}>Delete</button> */}
         </li>
       ))}
     </ul>
