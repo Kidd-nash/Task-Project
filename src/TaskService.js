@@ -25,12 +25,14 @@ export function getData(type) {
 
 }
 
-// export async function deleteTask(id) {
-//   const res = await fetch(`${taskUrl}?id=${id}`, {
-//     method: "DELETE",
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
-//   return res.json();
-// }
+export async function deleteData(type, id) {
+  const apiUrl = getUrl(type);
+
+  const res = await fetch(`${apiUrl}?id=${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+  return res.json();
+}
