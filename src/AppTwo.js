@@ -21,10 +21,10 @@ function AppTwo() {
         localStorage.setItem("reminders", JSON.stringify(reminders));
     }, [reminders]);
 
-    const handleDeleteReminders = (reminderId) => {
-        const newReminders = reminders.filter(reminder => reminderId !== reminder.id)
-        setReminders(newReminders);
-    };
+    const resetReminders = () => {
+        setReminders(defaultReminders);
+        localStorage.removeItem("reminders");
+    }
 
     const [showForm, setShowForm] = useState(false);
 
@@ -34,6 +34,11 @@ function AppTwo() {
 
     const handleCreateReminder = (reminder) => {
         setReminders([...reminders, reminder]);
+    };
+
+    const handleDeleteReminders = (reminderId) => {
+        const newReminders = reminders.filter(reminder => reminderId !== reminder.id)
+        setReminders(newReminders);
     };
 
     return (
@@ -61,6 +66,9 @@ function AppTwo() {
                     />
 
                     <hr />
+
+                    <button onClick={resetReminders} className="btn btn-danger mt-3">Reset</button>
+
                     <h2>
                         API Reminders
                     </h2>

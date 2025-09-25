@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Tasklist from "./Tasklist";
-import TaskListAPI from "./TaskListAPI";
 import TaskManagerForm from "./TaskManagerForm";
 import { Link } from "react-router-dom";
 
@@ -92,12 +91,6 @@ function App() {
         />
 
         <button onClick={resetTasks} className="btn btn-danger mt-3">Reset</button>
-
-        <hr />
-
-        {/* API Task List */}
-        <h2>API Tasks</h2>
-        <TaskListAPI />
       </div>
     </div>
   );
