@@ -8,12 +8,12 @@ function TaskListAPI() {
 
   useEffect(() => {
     getTask()
-         .then((data) => {
+      .then((data) => {
         if (data.success) {
           setTasks(data.data);
         } else {
           throw new Error(data.error || "Unknown API error");
-        } 
+        }
       })
       .finally(() => setLoading(false));
   }, []);
