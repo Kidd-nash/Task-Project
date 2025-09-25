@@ -1,28 +1,21 @@
 import { useState, useEffect } from "react";
+import { getReminders } from "./ReminderClass";
 
 function ReminderListAPI() {
     const [reminders, setReminders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(()=> {
-        fetch("http://localhost:8080/api-data/reminders")
-        .then((res)=> {
-            if (!res.ok) {
-                throw new Error("Failed to fetch reminders");
-            }
-            return res.json();
-        })
-        .then((data)=> {
-            if (data.success) {
-                setReminders(data.data);
-            } else {
-                throw new Error(data.error || "Unknown API Error");
-                
-            }
-        })
-        .catch((err) => setError(err.message))
-        .finally(() => setLoading(false));
+    useEffect(() => {
+        getReminders()
+            .then((data) => {
+                if (data.success) {
+                    setReminders(data.data);
+                } else {
+                    throw new Error(data.error || "Unknown API Error");
+                }
+            })
+            .finally(() => setLoading(false));
     }, []);
 
     if (loading) return <p>Loading reminders...</p>;
