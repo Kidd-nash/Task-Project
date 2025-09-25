@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getReminders, deleteReminder } from "./ReminderClass";
-import { getData } from "../TaskService";
+import { getData, deleteData } from "../TaskService";
 
 function ReminderListAPI() {
     const [reminders, setReminders] = useState([]);
@@ -23,7 +23,7 @@ function ReminderListAPI() {
     if (error) return <p>Error: {error}</p>;
 
     async function handleDelete(id) {
-        const result = await deleteReminder(id);
+        const result = await deleteData("reminder", id);
         if (result.success) {
           setReminders(reminders.filter(reminder => reminder.id !== id));
         } else {
