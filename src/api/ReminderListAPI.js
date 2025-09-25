@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getReminders } from "./ReminderClass";
+import { getReminders, deleteReminder } from "./ReminderClass";
 
 function ReminderListAPI() {
     const [reminders, setReminders] = useState([]);
@@ -21,6 +21,15 @@ function ReminderListAPI() {
     if (loading) return <p>Loading reminders...</p>;
     if (error) return <p>Error: {error}</p>;
 
+    async function handleDelete(id) {
+        const result = await deleteReminder(id);
+        if (result.success) {
+          setReminders(reminders.filter(reminder => reminder.id !== id));
+        } else {
+          alert("Error: " + result.error);
+        }
+      }
+
     return (
         <ul className="list-group mt-3">
             {reminders.map((reminder) => (
@@ -28,8 +37,9 @@ function ReminderListAPI() {
                     <span>{reminder.reminders}</span>
                     <span>
                         {new Date(reminder.due_date).toLocaleDateString()}{" "}
-                        {new Date(reminder.date).toLocaleTimeString()}
+                        {new Date(reminder.due_date).toLocaleTimeString()}
                     </span>
+                    <button onClick={() => handleDelete(reminder.id)}>Delete</button>
                 </li>
             ))}
         </ul>
