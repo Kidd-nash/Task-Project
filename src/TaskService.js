@@ -4,7 +4,7 @@ function getUrl(type) {
   if (type === "task") {
     return "http://localhost:8080/tasks";
   } if (type === "reminder") {
-    return "http://localhost:8080/api-data/reminders";
+    return "http://localhost:8080/reminders";
   } else {
     throw new Error("API data type undefined");
   };
