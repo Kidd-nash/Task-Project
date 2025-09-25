@@ -11,3 +11,14 @@ export function getReminders() {
         })
         .catch((err) => console.log(err.message));
 }
+
+export async function deleteReminder(id) {
+    const response = await fetch(
+        `${constantUrl}?id=${id}`,
+        {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}
+        }
+    );
+    return response.json();
+}
