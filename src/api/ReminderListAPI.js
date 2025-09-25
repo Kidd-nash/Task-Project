@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getReminders, deleteReminder } from "./ReminderClass";
+import { getData } from "../TaskService";
 
 function ReminderListAPI() {
     const [reminders, setReminders] = useState([]);
@@ -7,7 +8,7 @@ function ReminderListAPI() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        getReminders()
+        getData("reminder")
             .then((data) => {
                 if (data.success) {
                     setReminders(data.data);
