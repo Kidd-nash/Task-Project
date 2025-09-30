@@ -9,7 +9,11 @@ export async function getData(type) {
   try {
     const res = await fetch(apiUrl);
     const json = await res.json();
-    if (!res.ok) return { success: false, error: json.error || json.message || "Fetch failed" };
+
+    if (!res.ok) {
+      return { success: false, error: json.error || json.message || "Fetch failed" };
+    }
+
     return { success: !!json.success, data: json.data ?? json };
   } catch (err) {
     return { success: false, error: err.message };
@@ -19,11 +23,15 @@ export async function getData(type) {
 export async function deleteData(type, id) {
   const apiUrl = getUrl(type);
   try {
-    const res = await fetch(`${apiUrl}?id=${encodeURIComponent(id)}`, {
-      method: "DELETE"
-    });
+    const res = await fetch(
+      `${apiUrl}?id=${encodeURIComponent(id)}`, {method: "DELETE"}
+    );
     const json = await res.json();
-    if (!res.ok) return { success: false, error: json.error || json.message || "Delete failed" };
+
+    if (!res.ok) {
+      return { success: false, error: json.error || json.message || "Delete failed" };
+    }
+    
     return { success: true, data: json };
   } catch (err) {
     return { success: false, error: err.message };
