@@ -1,41 +1,18 @@
-import { useEffect, useState } from "react";
-import { getData, deleteData } from "./TaskService";
+function TaskListAPI({ tasks, onDelete }) {
+  if (!Array.isArray(tasks)) {
+    return <p>Unexpected tasks response — check console.</p>;
+  }
 
-function TaskListAPI() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    getData("task")
-      .then((data) => {
-        if (data.success) {
-          setTasks(data.data);
-        } else {
-          throw new Error(data.error || "Unknown API error");
-        }
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <p>Loading tasks...</p>;
-  if (error) return <p>Error: {error}</p>;
-
-  async function handleDelete(id) {
-    const result = await deleteData("task", id);
-    if (result.success) {
-      setTasks(tasks.filter(task => task.id !== id));
-    } else {
-      alert("Error: " + result.error);
-    }
+  if (tasks.length === 0) {
+    return <p>No tasks found.</p>;
   }
 
   return (
     <ul className="list-group mt-3">
       {tasks.map((task) => (
-        <li key={task.id} className="list-group-item">
-          {task.task}
-          <button onClick={() => handleDelete(task.id)}>Delete</button>
+        <li key={task.id} className="list-group-item d-flex justify-content-between">
+          <span>{task.task}</span>
+          <button className="btn btn-sm btn-danger" onClick={() => onDelete(task.id)}>Delete</button>
         </li>
       ))}
     </ul>
