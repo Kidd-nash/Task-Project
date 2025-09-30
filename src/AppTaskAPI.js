@@ -1,11 +1,17 @@
 import { useState, useEffect } from "react";
 import { getData, deleteData } from "./TaskService";
+import APITaskForm from "./APITaskForm";
 import TaskListAPI from "./TaskListAPI";
 
 function AppTaskAPI() {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [form, setForm] = useState(false);
+
+    const displayForm = () => {
+        setForm(prev => !prev);
+    }
 
     useEffect(() => {
         (async () => {
@@ -47,8 +53,13 @@ function AppTaskAPI() {
     return (
         <div className="container my-4 bg-light">
             <h2>API Tasks</h2>
+
             {loading && <p>Loading tasks...</p>}
             {error && <p className="text-danger">Error: {error}</p>}
+
+            <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
+            {form && (<APITaskForm />)}
+
             {!loading && !error && <TaskListAPI tasks={tasks} onDelete={handleDelete} />}
         </div>
     );
