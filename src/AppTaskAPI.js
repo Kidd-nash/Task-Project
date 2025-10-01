@@ -50,6 +50,10 @@ function AppTaskAPI() {
         }
     }
 
+    function handleCreate(newTask) {
+        setTasks(prev => [...prev, newTask]);
+    }
+
     return (
         <div className="container my-4 bg-light">
             <h2>API Tasks</h2>
@@ -58,7 +62,7 @@ function AppTaskAPI() {
             {error && <p className="text-danger">Error: {error}</p>}
 
             <button onClick={displayForm} className="btn btn-outline-primary" aria-label="create">+</button>
-            {form && (<APITaskForm />)}
+            {form && (<APITaskForm onCreate={handleCreate} />)}
 
             {!loading && !error && <TaskListAPI tasks={tasks} onDelete={handleDelete} />}
         </div>
