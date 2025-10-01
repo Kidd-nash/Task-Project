@@ -52,7 +52,7 @@ export async function createData(type, payload) {
       return { success: false, error: json.error || json.message || "Create failed" };
     }
 
-    return { success: true, data: json };
+    return { success: true, data: json.data };
   } catch (err) {
     return { success: false, error: err.message };
   }
