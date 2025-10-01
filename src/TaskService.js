@@ -24,14 +24,34 @@ export async function deleteData(type, id) {
   const apiUrl = getUrl(type);
   try {
     const res = await fetch(
-      `${apiUrl}?id=${encodeURIComponent(id)}`, {method: "DELETE"}
+      `${apiUrl}?id=${encodeURIComponent(id)}`, { method: "DELETE" }
     );
     const json = await res.json();
 
     if (!res.ok) {
       return { success: false, error: json.error || json.message || "Delete failed" };
     }
-    
+
+    return { success: true, data: json };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}
+
+export async function createData(type, payload) {
+  const apiUrl = getUrl(type);
+  try {
+    const res = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+    if (!res.ok) {
+      return { success: false, error: json.error || json.message || "Create failed" };
+    }
+
     return { success: true, data: json };
   } catch (err) {
     return { success: false, error: err.message };
